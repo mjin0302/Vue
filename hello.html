@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <!-- Mustache 콧수염표기법 -> {{}} -->
+
+  <div id="app">
+    <p>{{myText}}</p> <!-- v-text랑 같음 -->
+
+    <!-- v-text -> 속성 -->
+    <!-- 문자로 인식 -->
+    <p v-text="myText"></p> <!-- innerText -->
+    <!-- 태그가 존재하면 태그로 인식 -->
+    <p v-html="myText"></p> <!-- innerHTML -->
+
+    <!-- 디렉티브 : v-text, v-html, v-on... -->
+    <button v-on:click="changeText">변경</button>
+
+  </div>
+  <script>
+    
+    new Vue({ //vue라는 인스턴스를 생성
+      el:'#app', //어디에 밑에 기능들을 붙일것인가? -> #app를 벗어나면 인식을 못한다
+      data : {  //#app를 가진 요소 밑에 {{}} 안에 들어감
+        myText : "Hello!!"
+      },
+      methods : {
+        changeText:function() {
+          this.myText = `<button type="button">추가</button>`
+        }
+      }
+    })
+  </script>
+</body>
+</html>

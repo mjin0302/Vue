@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <style>
+    .underLine {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    .strike-through {
+      text-decoration: line-through;
+      color: #c4a8df;
+    }
+    .dark {
+      background-color: rgb(206, 131, 153);
+    }
+  </style>
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <img src="3.jpg" alt="">직접지정</img>
+    <!-- 각 tag의 속성에 접근할 때 사용 -->
+    <br>
+    <img v-bind:src="fileName">v-bind로 지정</img>
+
+    <!-- a태그 -->
+    <a href="https://www.naver.com">직접링크 지정</a>
+    <br>
+    <a v-bind:href="myURL">링크를 v-bind로 지정</a>
+
+    <!-- align -->
+    <p align="right">우측정렬 직접지정</p>
+    <p v-bind:align="myAlign">우측정렬 v-bind로 지정</p>
+
+    <!-- 인라인 스타일 지정 -->
+    <p style="color:#e80">문자색 직접 지정</p>
+    <p v-bind:style="{color : myColor}">문자색 v-bind로 지정</p>
+
+    <p style="font-size: 200%;">글자 크기 직접 지정</p>
+    <p v-bind:style="{fontSize : mySize}">글자 크기를 v-bind로 지정</p>
+
+    <p style="background-color: cornflowerblue;">배경색 직접 지정</p>
+    <p v-bind:style="{backgroundColor : myBackColor}">배경색 v-bind로 지정</p>
+
+    <p class="strike-through">직접 클래스 지정</p>
+    <p v-bind:class="myClass">v-bind로 클래스 지정</p>
+    <p v-bind:class="[myClass, darkClass]">v-bind를 복수로 지정</p>
+
+    <!-- symbol inON외 다른 변수도 가능 -->
+    <p v-bind:class="{'strike-through': isON}">데이터로 클래스 ON/OFF</p>
+
+    <button type="button" v-on:click="changeClass">변경</button>
+  </div>
+
+
+
+  <div id="app2">
+    <p>
+      <a v-bind:href="myLink">네이버로 연결</a>
+    </p>
+    <p>
+      <img v-bind:src="myImage">강아지로 표기
+    </p>
+    <p v-bind:align="liftAlign">텍스트 왼쪽 정렬</p>
+    <p v-bind:align="rightAlign">텍스트 왼쪽 정렬</p>
+    <p v-bind:align="centerAlign">텍스트 왼쪽 정렬</p>
+
+    <p v-bind:style="{color:rColor}">인라인 스타일 글자색 빨간색</p>
+    <p v-bind:style="{fontSize:fSize}">인라인 스타일 글자크기 150% 크게</p>
+    <p v-bind:style="{color : rColor, fontSize : fSize, backgroundColor : bColor} ">인라인 스타일로 글자크기 150%빨간색 배경 노란색</p>
+
+    <p v-bind:class="underLineText">blue_underline 지정</p>
+    <p v-bind:class="[strikeClass, underLineText]">blue_underline, strike-through</p>
+
+  </div>
+
+  <script>
+    new Vue({
+      el:'#app2',
+      data:{
+        myLink:"https://www.naver.com",
+        myImage : '3.jpg',
+        liftAlign: "left",
+        rightAlign: "center",
+        centerAlign: "right",
+        rColor : 'red',
+        fSize : '150%',
+        bColor : 'yellow',
+        underLineText : 'underLine',
+        strikeClass : 'strike-through'
+      }
+    })
+
+    new Vue({
+      el:'#app',
+      data:{
+        fileName : '3.jpg',
+        myURL:"https://www.naver.com",
+        myAlign:"right",
+        myColor : "#e80",
+        mySize : "200%",
+        myBackColor : "#e787bf",
+        myClass : 'strike-through',
+        darkClass:'dark',
+        isON:'true',
+      },
+      methods : {
+        changeClass : function() {
+          if(this.isON) {
+            this.isON = false;
+          } else {
+            this.isON = true;
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

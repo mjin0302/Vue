@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="myName" placeholder="이름">
+    <p>나는 {{myName}} 입니다.</p>
+    <textarea v-model="myText"></textarea>
+    <p>문장 : {{myText}}</p>
+    <p>문자수 : {{myText.length}}</p>
+    <label for="">
+      <input type="checkbox" v-model="myCheck">
+      체크박스의 상태 : {{myCheck}}
+    </label><br>
+
+    <label for="">
+      <input type="checkbox" v-model="myChecks" value="red">
+      빨간색
+    </label><br>
+
+    <label for="">
+      <input type="checkbox" v-model="myChecks" value="blue">
+      초록색
+    </label><br>
+
+    <label for="">
+      <input type="checkbox" v-model="myChecks" value="green">
+      파란색
+    </label><br>
+
+    선택한 색 : {{myChecks}}
+    <br><br><br><br><br> -
+
+    <label>
+      <input type="checkbox" v-model="myAgree">
+      동의합니다.
+    </label>
+    <button type="button" v-bind:disabled="myAgree == false">송신</button>
+    <br><br><br><br><br>
+
+    <label for="">
+      <input type="radio" value="red" v-model="picked">
+      빨간색
+    </label><br>
+    <label for="">
+      <input type="radio" value="green" v-model="picked">
+      초록색
+    </labe><br>
+    <label for="">
+      <input type="radio" value="yellow" v-model="picked">
+      노란색
+    </label><br>
+
+    {{picked}} 선택
+    <br><br><br><br><br>
+
+    <label>
+      <input type="radio" value="3.jpg" v-model="fileName">
+      고양이
+    </label><br>
+
+    <label>
+      <input type="radio" value="루피.jpg" v-model="fileName">
+      양파쿵야
+    </label><br>
+    
+    <label>
+      <input type="radio" value="루피2.jpg" v-model="fileName">
+      잔망루피
+    </label><br>
+    
+    <img v-bind:src="fileName">
+
+    <label ></label>
+  </div>
+  <script>
+    new Vue({
+      el: '#app',
+      data : {
+        myName : '',
+        myText: "오늘 날씨가 따뜻",
+        myCheck : false,
+        myChecks : [],
+        myAgree : false,
+        picked : 'red',
+        fileName : '',
+      }
+    })
+  </script>
+</body>
+</html>

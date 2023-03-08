@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <div id="daegu">
+    <input v-on:keyup.enter="showAlert" v-model="myText">
+    <p>{{myText}}</p>
+  </div>
+
+  <div id="calculator">
+    <input type="number" v-model.number="text1"><input type="number" v-model.number="text2">
+    <button v-on:click="add">덧셈계산</button>
+    <button v-on:click="minus">뺄셈계산</button>
+    <button v-on:click="multiply">곱셈계산</button>
+    <button v-on:click="divide">나눗셈계산</button>
+    <p>결과는 {{result}}</p>
+
+    <button @click="addVal(10)">10씩 증가</button> <!-- addVal(10) -> 10은 매개변수 -->
+    <button @click="addVal(100)">100씩 증가</button>
+    <button @click="addVal(1000)">1000씩 증가</button>
+    <p>{{count}}</p>
+
+  </div>
+  <script>
+    new Vue({
+      el:"#calculator",
+      data : {
+        text1: 0,
+        text2: 0,
+        result: 0,
+        count: 0
+      },
+      methods: {
+        add: function() {
+          this.result = this.text1 + this.text2
+        },
+        minus: function() {
+          this.result = this.text1 - this.text2
+        },
+        multiply: function() {
+          this.result = this.text1 * this.text2
+        },
+        divide: function() {
+          this.result = this.text1 / this.text2
+        },
+        addVal : function(value) {
+          this.count += value;
+        }
+      },
+    })
+    new Vue({
+      el:'#daegu',
+      data : {
+        myText: 'Hello!!'
+      },
+      methods : {
+        showAlert : function() {
+          alert("Enter키를 눌렀습니다.")
+        }
+      }
+    })
+  </script>
+</body>
+</html>
