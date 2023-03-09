@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src=" http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h1>제한 시간내에 문자 입력</h1>
+    <label>
+      금지문자(,로 나누어 복수 입력 가능)
+      <input type="text" v-model="forhiddenText" v-bind:disabled="!isWritable">
+    </label><br>
+    <label>
+      제한 시간을 입력 하세요(초)
+      <input type="number" v-model.numer="setTime" v-bind:disabled="!isWritable">
+      <button @click="start" v-bind:disabled="!isWritable">시작</button>
+    </label>
+    <p>남은시간 : {{limitTime}}</p>
+    <textarea v-model="inputText" v-bind:disabled="isWritable" cols="30" rows="10"></textarea>
+
+    <p>{{wordCnt}}개의 문자를 입력 하였습니다.</p>
+    <p>벌점 : {{resultScore}} (금지문자 1개당 12점)</p>
+  </div>
+
+  <script>
+    new Vue ({
+      el: "#app",
+      data: {
+        forhiddenText: "",
+        isWritable: true,
+        limitTime : 0,
+        setTime: 0,
+        inputText: "",
+        timerObj: null,
+        wordCnt: 0,
+        forhiddenCnt: 0
+      },
+      methods: {
+        start: function () {
+          this.isWritable = false;
+          this.limitTime = this.setTime;
+          // 본인 자신을 가르키는 this를 vueObj에 넣어 줌(vue그 자체)
+          const vueObj = this;
+          this.timerObj = setInterval(function() {
+            vueObj.limitTime --;
+          }, 1000)
+        },
+      },
+      watch: {
+        // 시간이 흘러가는 걸 실시간으로 봄
+        limitTime: function() {
+          if(this.limitTime <= 0) {
+            alert("제한시간에 도달 했습니다.")
+            clearInterval(this.timerObj)
+            this.isWritable = true;
+            this.wordCnt = this.inputText.length;
+          }
+        },
+        inputText: function() {
+          let dataList = this.forhiddenText.split(",");
+          for(let i = 0; i<dataList.length; i++) {
+            let keyword = dataList[i];
+            let pos = this.inputText.indexOf(keyword);
+            if(pos > -1) {
+              alert(this.forhiddenText + "는 입력할 수 없습니다.") 
+              this.forhiddenCnt++;
+              this.inputText = this.inputText.substr(0, pos);
+              this.limitTime += 10
+            }
+          }
+        }
+      },
+      computed: {
+        resultScore: function() {
+          return this.forhiddenCnt * 12;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

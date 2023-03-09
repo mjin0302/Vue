@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src=" http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>데이터 변화가 일어났을때</title>
+</head>
+<body>
+  <div id="app">
+    <p>금지 문자는 「{{forbiddentText}}」</p>
+    <textarea v-model="inputText" cols="30" rows="10"></textarea>
+    <br>
+    <p>앞으로{{restSec}}</p>
+    <button @click="startTimer">START</button>
+  </div>
+
+  <script>
+    new Vue({
+      el: "#app",
+      data: {
+        forbiddentText: "안돼",
+        inputText: "오늘은 날씨가 좋습니다.",
+        restSec: 10,
+        timerObj: null
+      },
+      methods: {
+        startTimer: function () {
+          clearInterval(this.timerObj) // clearInterval -> 멈추는것
+          this.restSec = 10;
+          this.timerObj = setInterval(() => { // setInterval이 실행될때마다 고유 ID가 나옴 -> 고유 ID가 timerObj에 저장
+            this.restSec-- // 1초 마다 실행 할 내용
+          }, 1000); // 1000 => 1초
+        },
+      },
+      watch: {
+        restSec: function() {
+          if(this.restSec <= 0) {
+            alert("제한 시간 입니다.")
+            clearInterval(this.timerObj)
+          }
+        },
+        inputText: function() {
+          var pos = this.inputText.indexOf(this.forbiddentText);
+          if(pos >= 0) {
+            alert(this.forbiddentText + "는 입력할 수 없습니다.")
+            this.inputText = this.inputText.substr(0, pos); // 금지 단어 부분만 잘라서 가져옴?
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -3,7 +3,6 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 
@@ -13,7 +12,9 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 </head>
+
 <body>
+
   <div id="app2">
     <!-- input의 value 속성이 비어있으면 모든 데이터(dataList)가 보이고 검색을 하면 해당되는 데이터만 보이도록 -->
     <input type="text">
@@ -35,15 +36,15 @@
         // remove : 아예 없애는것
 
         let keyword = $('#app2 > input:text:eq(0)').val();
-        if (keyword != '') { // 데이터가 있으면 가져오기
+        if (keyword != '') { // input안에 입력한 값이 있으면 가져오기
           $(dataList).each(function (idx, val) {
-            if (val.match(keyword)) { // 특정 키워드가 포함되어있는지 없는지 판단할때 사용
+            if (val.match(keyword)) { // match => 특정 키워드가 포함되어있는지 없는지 판단할때 사용(index of랑 비슷함)
               $('#app2 > ul:first').append(
                 $('<li />').text(val)
               )
             }
           })
-        } else {
+        } else { // input안에 입력한 값이 없으면 가져오기
           init();
         }
       }
@@ -57,6 +58,63 @@
     })
   </script>
 
+  <div id="app3">
+    <input type="text" v-model="findWord">
+    <ul>
+      <li v-for="item in findItems">
+        {{item}}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    let myArray = ['설악산', '한라산', '북한산', '백두산', '지리산'];
+    //let myArray = [];
+    new Vue({
+      el: "#app3",
+      data: {
+        findWord: "",
+        items: myArray,
+      },
+      computed: {
+        findItems : function() {
+          if(this.findWord) {
+            return this.items.filter(function(value) {
+              return(value.indexOf(this.findWord) > -1)
+            }, this) // 매개변수를 의미함
+          } else {
+            return this.items;
+          }
+        }
+      }
+    })
+  </script>
+
+  <div id="app4">
+    <p v-bind:style="{backgroundColor : mixColor}">
+      {{mixColor}}
+    </p>
+    <input type="range" v-model="R" min="0" max="255">
+    <input type="range" v-model="G" min="0" max="255">
+    <input type="range" v-model="B" min="0" max="255">
+  </div>
+
+  <script>
+    new Vue({
+      el: "#app4",
+      data: {
+        R: 255,
+        G: 150,
+        B: 100
+      },
+      computed: {
+        mixColor: function() {
+          var ans = "RGB(" + this.R + "," + this.G + "," + this.B +")";
+          return ans;
+        }
+      }
+    })
+  </script>
   </body>
 
 </html>
