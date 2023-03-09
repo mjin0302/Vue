@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src=" http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.12.4.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+  <div id="app2">
+    <!-- input의 value 속성이 비어있으면 모든 데이터(dataList)가 보이고 검색을 하면 해당되는 데이터만 보이도록 -->
+    <input type="text">
+    <ul></ul>
+  </div>
+
+  <script>
+    let dataList = ['설악산', '한라산', '북한산', '백두산', '지리산'];
+    $(document).ready(function () {
+      init();
+      // $('#app2') // id가 app2 dom을 가지고 올때
+      // $('#app2 > input:text:eq(0)') : id가 app2인 dom 자식중에 input type이 text인 자식중에
+      // 인덱스가 0인 자식을 가지고와라
+      // document.querySelectorAll('') 와 비슷함
+      $('#app2 > input:text:eq(0)').on('change', changeData); // .on -> 변화가 일어나는 이벤트(change이벤트)
+
+      function changeData() {
+        $('#app2 > ul:first').empty(); // empty : 내가 가지고는 내용을 깨끗이 비어주는것
+        // remove : 아예 없애는것
+
+        let keyword = $('#app2 > input:text:eq(0)').val();
+        if (keyword != '') { // 데이터가 있으면 가져오기
+          $(dataList).each(function (idx, val) {
+            if (val.match(keyword)) { // 특정 키워드가 포함되어있는지 없는지 판단할때 사용
+              $('#app2 > ul:first').append(
+                $('<li />').text(val)
+              )
+            }
+          })
+        } else {
+          init();
+        }
+      }
+      function init() {
+        $(dataList).each(function(idx, val) {
+          $("#app2 > ul").append(
+            $("<li/>").text(val)
+          )
+        })
+      }
+    })
+  </script>
+
+  </body>
+
+</html>

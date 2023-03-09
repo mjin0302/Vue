@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <!-- myArray 1 ~ 10까지 데이터를 담고 있음 -->
+      <!-- 짝수만 li tag에 등록 -->
+      <!-- <li v-for="item in myArray" v-if="item % 2 == 0">
+        {{item}}
+      </li> -->
+    </ul>
+
+    <li v-for="item in myArray">
+      {{item}}
+    </li>
+    <button v-on:click="evenData">짝수만 표시</button>
+  </div>
+  <script>
+    new Vue({
+      el: "#app",
+      data: {
+        myArray:[1, 2, 3, 4, 5, 6]
+      },
+      methods: {
+        evenData: function() {
+          // filter -> 무조건 배열에서만 가능함
+          // myArray데이터를 val에 넣음
+          // 원하는 조건(return val % 2 == 0;)에 맞는 데이터만 가지고 와서 새로운 배열을 만듦
+          this.myArray = this.myArray.filter(function(val) {
+            return val % 2 == 0;
+          });
+        }
+      },
+    });
+  </script>
+
+  <!-- 내가 푼 방식 -->
+  <div id="gugu">
+    <h3>숫자 배열 조작과 구구단 출력</h3>
+    <ul >
+      <li v-for="n in 10" v-if="n % 2 == 0">
+        {{n}}
+        <button @click="guguEvent(n)">변경</button>
+        <button @click="danDel">삭제</button>
+      </li>
+    </ul>
+
+    <button @click="danPlus">추가</button>
+    <button>정렬</button>
+    <button v-on:click="show">구구단 보이기</button>
+
+    <template v-if="isShow">
+      <ul>
+        <li v-for="m in myNum">
+          {{n}} * {{m}} = {{n * m}}
+        </li>
+      </ul>
+    </template>
+  </div>
+
+  <!-- 쌤 -->
+  <div id="gugu2">
+    <h3>숫자 배열 조작과 구구단 출력</h3>
+    <ul>
+      <li v-for="item in myArray">
+        {{item}}
+        <button @click="change(item)">변경</button>
+        <button @click="deletes(item)">삭제</button>
+      </li>
+    </ul>
+  
+    <button @click="add()">추가</button>
+    <button v-on:click="showData()">구구단 보이기</button>
+  
+    <div v-if="visible">
+      <!-- 구구단 출력 -->
+      <p v-for="item in  9" v-bind="no">
+        {{no}} * {{item}}= {{no * item}}
+      </p>
+    </div>
+  </div>
+
+  <!-- 쌤 -->
+  <script>
+    new Vue({
+      el: "#gugu2",
+      data: {
+        no : 0,
+        visible: false, // 첨에 화면 로딩 했을 때 안보여주기 위해서
+        myArray : [2, 4, 6, 8, 10]
+      },
+      methods : {
+        change : function(item) {
+          this.no = item;
+        },
+        deletes : function(item) {
+          this.myArray = this.myArray.filter(function(val) {
+            return item != val;
+          });
+        },
+        add:function() {
+          this.no ++;
+        },
+        showData: function() {
+          //삼항 연산자
+          return this.visible == true ? this.visible = false : this.visible = true;
+        },
+      },
+    });
+  </script>
+
+  <script>
+    new Vue({
+      el: "#gugu",
+      data: {
+        n: 2,
+        myNum: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        isShow: true,
+      },
+      methods: {
+        guguEvent: function (n) {
+          this.n = n;
+        },
+        show: function () {
+          if(this.isShow == true) {
+            this.isShow = false;
+          } else {
+            this.isShow = true;
+          }
+        },
+        danPlus: function() {
+          this.n += 1;
+        },
+        danDel: function() {
+          this.n = 0;
+        }
+      },
+    })
+  </script>
+</body>
+</html>
