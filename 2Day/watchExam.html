@@ -16,18 +16,21 @@
     <h1>제한 시간내에 문자 입력</h1>
     <label>
       금지문자(,로 나누어 복수 입력 가능)
-      <input type="text" v-model="forhiddenText" v-bind:disabled="!isWritable">
+      <input type="text" v-model="forhiddenText" :disabled="!isWritable"> <!-- 데이터가 왔다갔다 해야해서 model-->
     </label><br>
     <label>
       제한 시간을 입력 하세요(초)
-      <input type="number" v-model.numer="setTime" v-bind:disabled="!isWritable">
-      <button @click="start" v-bind:disabled="!isWritable">시작</button>
+      <!-- v-bind:disabled == :disabled(v-bind생략 가능) 
+          disabled는 활성화 비활성화 할때 -->
+
+      <input type="number" v-model.numer="setTime" :disabled="!isWritable"> 
+      <button @click="start" :disabled="!isWritable">시작</button>
     </label>
     <p>남은시간 : {{limitTime}}</p>
-    <textarea v-model="inputText" v-bind:disabled="isWritable" cols="30" rows="10"></textarea>
+    <textarea v-model="inputText" :disabled="isWritable" cols="30" rows="10"></textarea><!-- 입력받고 있는 문자가 금지어인지 아닌지 지켜보기위해 watch -->
 
-    <p>{{wordCnt}}개의 문자를 입력 하였습니다.</p>
-    <p>벌점 : {{resultScore}} (금지문자 1개당 12점)</p>
+    <p>{{wordCnt}}개의 문자를 입력 하였습니다.</p> <!--  -->
+    <p>벌점 : {{resultScore}} (금지문자 1개당 12점)</p> <!-- 계산이 들어가기 때문에 computed-->
   </div>
 
   <script>
@@ -43,14 +46,16 @@
         wordCnt: 0,
         forhiddenCnt: 0
       },
+      // 
       methods: {
-        start: function () {
-          this.isWritable = false;
-          this.limitTime = this.setTime;
+        start: function () { // 버튼 클릭했을 때 일어나는 이벤트
+          this.isWritable = false; // 활성화, 비활성화
+          this.limitTime = this.setTime; // 감소되는 초
           // 본인 자신을 가르키는 this를 vueObj에 넣어 줌(vue그 자체)
-          const vueObj = this;
+          const vueObj = this; // 객체(new Vue)
           this.timerObj = setInterval(function() {
-            vueObj.limitTime --;
+            // 익명함수에서의 this는 windows this를 의미함
+            vueObj.limitTime --; // this.limitTime--;
           }, 1000)
         },
       },
@@ -66,12 +71,12 @@
         },
         inputText: function() {
           let dataList = this.forhiddenText.split(",");
-          for(let i = 0; i<dataList.length; i++) {
+          for(let i = 0; i < dataList.length; i++) {
             let keyword = dataList[i];
             let pos = this.inputText.indexOf(keyword);
             if(pos > -1) {
               alert(this.forhiddenText + "는 입력할 수 없습니다.") 
-              this.forhiddenCnt++;
+              this.forhiddenCnt++; // 금지어를 몇개 사용 햇는지 갯수
               this.inputText = this.inputText.substr(0, pos);
               this.limitTime += 10
             }

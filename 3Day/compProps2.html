@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <my-component my-name="또치"></my-component>
+    <my-component my-name="희동"></my-component>
+    <my-component></my-component>
+  </div>
+  <hr>
+  <script>
+    const MyComponent = {
+      template: `<p>나는 {{myName}} 입니다. </p>`,
+      // props : ['']
+      props : {
+        myName: String,
+      },
+      created: function() { // vue인스턴스 생성 후 실행
+        if(this.myName == null) { // myName이 없을 때
+          this.myName = "마이콜" // 디폴트 값으로 마이콜을 넣겠다는 말
+        }
+      }
+    }
+    
+    new Vue({
+      el:"#app",
+      components: {
+        "my-component": MyComponent
+      }
+    })
+  </script>
+
+  <div id="app2">
+    <!-- JS : for in, for of -> vue에서는 둘다 독같음 -->
+    <my-component v-for="(item, index) in myArray" :my-name="item"></my-component>
+  </div>
+  <hr>
+  <script>
+    const MyComponent2 = {
+      template: `<p>나는 {{myName}} 입니다. </p>`,
+      props: {
+        myName: String,
+      },
+      created: function() {
+        if(this.myName == null) {
+          this.myName = '도우너';
+        }
+      }
+    }
+
+    new Vue({
+      el: "#app2",
+      data: {
+        myArray: ["또치", "희동", "길동", "마이콜", "둘리"],
+        
+      },
+      components: {
+        "my-component": MyComponent2
+      }
+    })
+  </script>
+
+  
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <h2>컴포넌트를 숫자로 출력</h2>
+    <my-component v-for="item in myArray" :my-num="item"></my-component>
+  </div>
+  <hr>
+  <script>
+    const MyComponent = {
+      template: `<p>{{myNum}}은 {{sniffling}}입니다.</p>`, // 모듈?
+      // 자식이 부모가 가지고 있는 데이터를 쓰기 위해서 선언 하는 것
+      // props: {
+      //   myNum: Number,
+      // },
+      props: ["myNum"],
+      created: function () {
+        if (this.myNum % 2 == 0) {
+          this.sniffling = '짝수';
+        } else {
+          this.sniffling = '홀수';
+        }
+      }
+    }
+
+    new Vue({
+        el: "#app",
+        data: {
+          myArray: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        },
+        components: { //.append
+          "myComponent": MyComponent
+        }
+      })
+  </script>
+
+  <!-- <div id="app2">
+    <h2>컴포넌트를 숫자로 출력</h2>
+    <my-component v-for="item in myArray2" :my-num2="item"></my-component>
+  </div>
+  <hr>
+  <script>
+    const MyComponent2 = {
+      template: `<p>{{myNum2}}은 {{sniffling2}}입니다.</p>`, // 모듈?
+      props: {
+        myNum2: Number
+      },
+      computed: {
+        sniffling2 : function() {
+          if (this.myNum2 % 2 == 0) {
+            return this.sniffling2 = '짝수';
+          } else {
+            return this.sniffling2 = '홀수';
+          }
+        }
+      }
+    }
+
+    new Vue({
+      el: "#app2",
+      data: {
+        myArray2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      },
+      components: { //.append
+        "my-component": MyComponent2
+      }
+    })
+  </script> -->
+
+  <div id="app3">
+    <input v-model="name"> <!-- new Vue() -->
+    <name-component :today="200+15" :my-name="name"></name-component>
+
+    <!-- dataList안에 있는 today, myName을 자식 컴포넌트에 바인딩 -->
+    <name-component v-bind="dataList"></name-component>
+    <name-component my-name="또치" :today="100"></name-component>
+    <name-component my-name="12.5"></name-component>
+  </div>
+
+  <script>
+    const component = {
+      template: `<p> {{today+1}}, 나는 {{myName}} 입니다. </p>`,
+      props: {
+        myName: String,
+        today: {
+          type:  Number,
+          default: -1,
+        }
+      }
+    }
+    
+    new Vue({
+      el: "#app3",
+      data: {
+        name: "",
+        array: {
+          myName: 22,
+          today: 205
+        },
+      },
+      computed: {
+        dataList: function () {
+          return {
+            myName: this.name,
+            today: Date.now()
+          }
+        }
+      },
+      components: { //.append
+        "name-component": component
+      }
+    })
+  </script>
+</body>
+</html>

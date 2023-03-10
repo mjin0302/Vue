@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    {{counter}} <br>
+    <!-- new Vue()-->
+    <button @click="incrementCounter">카운터 증가</button>
+    <!-- MyComponent가 부모의 incrementCounter를 사용하도록 설정 -->
+    <my-component v-on:increment-me="incrementCounter"></my-component>
+    <count-component v-on:count-up="incrementCounter"></count-component> <!-- 부모 컴퍼넌트? -->
+  </div>
+  <script>
+    const counterComponent = {
+      template: `<div>
+                  <input v-model="countData">
+                  <button @click="counting">{{countData}}</button>
+                </div>`,
+      data: function() {
+        return {
+          countData: 0  // 자식 입장에서의 counter
+        }
+      },
+      methods: {
+        counting: function() {
+          this.countData++;
+        }
+      },
+      watch: {
+        countData: function() {
+          // v-on:count-up="incrementCounter"
+          this.$emit("count-up")
+        }
+      }
+    }
+    const MyComponent = {
+      template: `<div>
+                  <button v-on:click="childIncrementCounter">자식으로부터 증가</button>
+                </div>`,
+      methods: {
+        childIncrementCounter() {
+          //$emit: 부모 컴포넌트 이벤트 발생
+          this.$emit("increment-me") // 부모의 이벤트를 받아서 이름을 정의한 다음 부모 이벤트를 발생?
+        }
+      }
+    }
+
+    new Vue({
+      el: "#app",
+      data() {
+        return {
+          counter: 0
+        }
+      },
+      methods: {
+        incrementCounter() {
+          this.counter++;
+          console.log(this)
+        }
+      },
+      components: {
+        "my-component": MyComponent,
+        "count-component": counterComponent
+      }
+    })
+  </script>
+</body>
+</html>
