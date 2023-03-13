@@ -36,7 +36,7 @@ export default new VueRouter ({
       path: '/boardWrite',
       name: 'boardWrite',
       component: myBoardWrite,
-      props: true
+      // props: true
     },
   ]
 })

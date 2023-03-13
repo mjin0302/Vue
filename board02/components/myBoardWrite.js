@@ -18,11 +18,7 @@ export default {
     return {
       title: '',
       content: '',
-      object: [],
     }
-  },
-  created: function () {
-    this.object = this.$parent.getParentData();
   },
   methods: {
     boardSave: function () {
@@ -47,9 +43,9 @@ export default {
 
       // this.dataArray['board'].push(boardInfo);
       dataList.push(boardInfo);
-      this.$parent.setParentData(dataList);
+      this.$parent.setParentData(dataList); // 부모한테 갱신
 
-      this.$router.push({ name : 'boardList' });
+      this.$router.push({ name : 'boardList' }); // 저장을 누르면 값이 들어가고 리스트로 이동
     }
   },
 }

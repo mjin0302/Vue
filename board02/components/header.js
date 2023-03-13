@@ -5,14 +5,14 @@ export default { // header.js에 있는 컴포넌트를 내보내겠다는 의�
   template: `
     <header>
       <h2>간단한 게시판</h2>
-        <p>게시판 데이터 json 파일 읽기</p>
+      <p>게시판 데이터 json 파일 읽기</p>
 
-        <!-- board.json 파일 읽어오는 부분 -->
-        <!-- ajax, fetch 파일 읽고 화면 출력 -->
-        <input type="file" v-on:change="loadData($event)">
+      <!-- board.json 파일 읽어오는 부분 -->
+      <!-- ajax, fetch 파일 읽고 화면 출력 -->
+      <input type="file" v-on:change="loadData($event)">
 
-        <!-- 화면에 보여지는 게시글 json파일로 다운로드 -->
-        <button v-on:click="saveBoardList">게시판 저장하기</button>
+      <!-- 화면에 보여지는 게시글 json파일로 다운로드 -->
+      <button v-on:click="saveBoardList">게시판 저장하기</button>
     </header>`,
 
   props: ['parentData'], // app.js에 dataArray
@@ -21,24 +21,19 @@ export default { // header.js에 있는 컴포넌트를 내보내겠다는 의�
       let file = event.target.files[0].name;
       if (file) { // 파일 이름이 있다면
         fetch('/board02/data/' + file)
-          .then(response => response.json())
-          .then(data => { // data : json파일을 읽어온것
-            //this.dataArray = data; // 읽어온 데이터를 vue 인스턴스에 넣어줌
-            this.parentData.dataArray = data; // 부모가 가진 모든 데이터리스트중에서 dataArray를 가져와서 쓴다는말
-            // if(this.dataArray != null && this.dataArray['board'].length > 0){
-            //     this.listOk = true;
-            // }
-            // if (this.parentData.dataArray != null && this.parentData.dataArray['board'].length > 0) {
-            //   this.parentData.listOk = true;
-            // }
-            this.$emit('update:parentData', this.parentData);
+        .then(response => response.json())
+        .then(data => { // data : json파일을 읽어온것
+          //this.dataArray = data; // 읽어온 데이터를 vue 인스턴스에 넣어줌
+          this.parentData.dataArray = data; // 부모가 가진 모든 데이터리스트중에서 dataArray를 가져와서 쓴다는말
+          this.$emit('update:parentData', this.parentData); // 자식이 들고와서 부모한테 줌 => 동기화 => 부모 == 자식
 
-            // <router-link to="/boardList">이동</router-link>
-            // + 
-            // click까지 진행
-            // $router.push
-            this.$router.push({name : 'boardList'});
-          }).catch(err => console.log(err));
+          // <router-link to="/boardList">이동</router-link>
+          // + 
+          // click까지 진행
+          // $router.push
+          this.$router.push({name : 'boardList'});
+        })
+        .catch(err => console.log(err));
       }
     },
     saveBoardList: function () {

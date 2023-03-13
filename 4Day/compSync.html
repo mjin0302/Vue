@@ -18,14 +18,14 @@
   <script>
     const countComponent = {
       template: `<div>
-                    <p>{{myCount}}
-                    <button v-on:click="myCountUp">자식 증가</button>
-                  </div>`,
-      props: ['myCount'],
+                  <p>{{myCount}}</p>
+                  <button v-on:click="myCountUp">자식 증가</button>
+                </div>`,
+      props: ['myCount'], //부모 데이터 쓰는거
       methods: {
         myCountUp : function() {
           this.myCount++;
-          this.$emit('update:myCount', this.myCount);
+          this.$emit('update:myCount', this.myCount); // 자식이 부모에게 준다 뭐를? 자식이 가지고 있는 데이터를
           console.log("자식 myCountUp 호출", this.myCount)
         }
       }
@@ -33,7 +33,7 @@
     new Vue ({
       el:"#app",
       data : {
-        count: 0
+        count: 10
       },
       methods: {
         countUp : function(){
