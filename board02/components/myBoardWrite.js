@@ -27,7 +27,7 @@ export default {
       let no = 1;
 
       if(dataList.length != 0) {
-        // 데이터가 총 3건 -> length 3 -> 베열[3] -> 4번째
+        // 데이터가 총 3건 -> length 3 -> 배열[3] -> 4번째
         let index = dataList.length -1;
         // index를 활용하여 마지막 게시판 no를 가지고 온뒤
         // + 1 -> 마지막 게시판 번호
