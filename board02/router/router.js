@@ -1,9 +1,8 @@
 import main from '../components/main.js';
-import myBoardList from '../components/myBoardList.js';
+import myBoardList from '../components/header';
 import myBoardRead from '../components/myBoardRead.js';
 import myBoardWrite from '../components/myBoardWrite.js';
-
-export default new VueRouter ({
+export default new VueRouter({
   // hash -? # + 경로 (server로 요청을 보내지 않고 페이지 이동)
   // 경로를 읽을때(url) # 뒤에 있는 경로를 읽을 수가 없음 (뷰에서 만든 컴포넌트를 쓰는것?)
 
@@ -26,7 +25,7 @@ export default new VueRouter ({
     {
       //boardRead로 이동할 때 item이라는 매개변수를 붙여서 넘어감, 따라서 myBoardRead.js.가 item을 읽어가야함
       // myBoardList.js -> router.js -> myBoardRead.js
-      path: '/boardRead/:item', 
+      path: '/boardRead/:item',
       name: 'boardRead',
       component: myBoardRead,
       props: true
