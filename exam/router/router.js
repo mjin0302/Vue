@@ -23,9 +23,10 @@ export default new VueRouter({
     },
     // movieDetail
     {
-      path: '/movieDetail',
+      path: '/movieDetail/:item',
       name: 'movieDetail',
-      component: movieDetail
+      component: movieDetail,
+      props: true,
     },
   ]
 })
