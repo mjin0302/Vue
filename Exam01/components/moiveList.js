@@ -1,6 +1,6 @@
 export default {
     template: `
-<div>
+    <div>
         <table id="list">
             <thead>
             <th >순위</th>
@@ -28,23 +28,22 @@ export default {
                 </tr>
             </tbody>
         </table>
-
-</div>`,
-data : function(){
-    return {
-        object : []
+    </div>`,
+    data : function(){
+        return {
+            object : []
+        }
+    },
+    created : function(){
+        this.object = this.$parent.getParentData();
+    },
+    methods : {
+        movieDelete : function(movieCode){
+            this.object = this.object.filter(function(item){
+                return (item.movieCd != movieCode)
+            }, this);
+            // 모든 컴포넌트들이 데이터를 유지하기 위해서
+            this.$parent.setParentData(this.object) // 업데이트된 새로운 데이터를 넣어줌
+        }
     }
-},
-created : function(){
-    this.object = this.$parent.getParentData();
-},
-methods : {
-    movieDelete : function(movieCode){
-        this.object = this.object.filter(function(item){
-            return (item.movieCd != movieCode)
-        }, this);
-        // 모든 컴포넌트들이 데이터를 유지하기 위해서
-        this.$parent.setParentData(this.object) // 업데이트된 새로운 데이터를 넣어줌
-    }
-}
 }

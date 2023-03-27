@@ -11,7 +11,7 @@
     * {
       font-weight: bold;
     }
-
+    
     html {
       width: 90%;
       margin-right: auto;
@@ -45,7 +45,7 @@
   </style>
 </head>
 
-<body>
+<body>  
   <h1>좀더 좋아진 ToDo리스트</h1>
   <div id="app">
     <div v-for="(todo, index) in todos">
@@ -68,7 +68,7 @@
       <button v-on:click="sortData('date')">완료일로 정렬</button>
     </p>
 
-    <p>{{ todos.length }}건 중 {{ remaining }}건 처리, {{overdate}} 완료일 지남
+    <p>{{ todos.length }}건 중 {{ remaining }}건 처리, {{overdate}} 완료일 지남</p>
   </div>
 
   <script>
