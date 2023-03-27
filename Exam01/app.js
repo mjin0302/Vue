@@ -5,14 +5,15 @@ let template = `
 <div>
     <h1>영화 검색 사이트</h1>
     <my-header v-bind:parentData.sync="this.$data"></my-header>
-    <router-view></router-view>
+    <router-view></router-view> <!--  -->
 </div>`
 
+// 젤 부모 역할을 함
 new Vue({
-    el : '#app',
-    template : template,
+    el : '#app', // index.html #app인 div에 붙음
+    template : template, // div에 붙을때 template를 사용해서 붙음
     data : {
-       movieArray : {}
+        movieArray : {}
     },
     components : {
         myHeader

@@ -1,3 +1,5 @@
+// 하나의 허브 역할을 해줌 
+// 모든 컴포넌트들은 라우터를 통해서 부모한테 갈 수 있음
 import main from '../components/main.js';
 import myBoardList from '../components/header';
 import myBoardRead from '../components/myBoardRead.js';

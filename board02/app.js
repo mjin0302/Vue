@@ -3,17 +3,19 @@ import myHeader from './components/header.js'
 // router로 옮겨서 사용
 import router from './router/router.js'
 
-// this.$data : 부모가 가진 모든 data를 자식쪽에서 가져옴 
-//부모의 데이터에다가 불러온 데이터를 저장해야하므로 sync를 씀 
+// this.$data : 부모가 가진 모든 data를 자식쪽에서 가져옴
+//부모의 데이터에다가 불러온 데이터를 저장해야하므로 sync를 씀
+// 계속 사용 할 부분
+//<router-view></router-view> router를 붙여줌
 let template = `
     <div>
-      <my-header v-bind:parentData.sync="this.$data"></my-header> 
+      <my-header v-bind:parentData.sync="this.$data"></my-header>
       <router-view></router-view>
     </div>
   `
 
 // Vue 객체를 정의
-new Vue({
+new Vue({ // 얘가 부모임
   el: '#app',
   template: template,
   data: {
@@ -32,5 +34,5 @@ new Vue({
       this.dataArray['board'] = dataList
     },
   },
-  router
+  router // => import router from './router/router.js'를 실행? (4번째줄)
 })
